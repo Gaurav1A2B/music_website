@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spotify Clone</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="bg-zinc-900 text-white">
+
+  <!-- APP CONTAINER -->
+  <div class="min-h-screen flex flex-col">
+
+    <!-- TOP AREA (SIDEBAR + MAIN) -->
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- SIDEBAR -->
+      <aside class="hidden md:flex md:w-64 bg-black/70 border-r border-zinc-800 flex-col p-4 space-y-6">
+        <div>
+          <h1 class="text-2xl font-bold mb-1">Spotify Clone</h1>
+          <p class="text-xs text-zinc-400">By Gaurav</p>
+        </div>
+
+        <nav class="space-y-3 text-sm">
+          <div class="text-zinc-400 uppercase tracking-wide text-xs">Main</div>
+          <button class="block w-full text-left hover:text-white">Home</button>
+          <button class="block w-full text-left hover:text-white">Search</button>
+          <button class="block w-full text-left hover:text-white">Your Library</button>
+        </nav>
+
+        <div class="border-t border-zinc-800 pt-4 flex-1 overflow-y-auto">
+          <h2 class="text-xs text-zinc-400 uppercase mb-2">Playlists</h2>
+          <ul class="space-y-1 text-sm">
+            <li class="text-zinc-300 hover:text-white cursor-pointer">🏃‍♂️ Workout Mix</li>
+            <li class="text-zinc-300 hover:text-white cursor-pointer">📚 Study Vibes</li>
+            <li class="text-zinc-300 hover:text-white cursor-pointer">🌙 Chill Nights</li>
+            <li class="text-zinc-300 hover:text-white cursor-pointer">🔥 Trending Now</li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="flex-1 p-4 md:p-6 overflow-y-auto">
+
+        <!-- TOP BAR (MOBILE HEADER) -->
+        <div class="md:hidden mb-4 flex items-center justify-between">
+          <h1 class="text-xl font-bold">Spotify Clone</h1>
+          <button class="text-sm bg-green-500 px-3 py-1 rounded-full text-black font-semibold">
+            Upgrade
+          </button>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="mb-6 md:mb-8">
+          <div class="bg-gradient-to-br from-green-500/10 via-zinc-800 to-zinc-900 rounded-xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-4">
+            <img
+              id="currentCover"
+              src="https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=400"
+              alt="Album Cover"
+              class="w-32 h-32 md:w-40 md:h-40 rounded shadow-lg object-cover"
+            />
+            <div class="flex-1">
+              <p class="text-xs uppercase tracking-wide text-zinc-400">Playlist</p>
+              <h2 id="currentTitle" class="text-2xl md:text-4xl font-bold mb-1">Lo-fi Focus Beats</h2>
+              <p id="currentArtist" class="text-sm md:text-base text-zinc-300 mb-2">
+                Various Artists
+              </p>
+              <p class="text-xs md:text-sm text-zinc-400">
+                Chill, relaxed tracks to help you study, code, or just vibe.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SONG LIST -->
+        <section>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-lg font-semibold">Songs</h3>
+            <span class="text-xs text-zinc-400">Click a song to play</span>
+          </div>
+
+          <div id="songList" class="bg-black/40 rounded-lg divide-y divide-zinc-800">
+            <!-- Songs injected by JS -->
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- PLAYER BAR -->
+    <footer class="h-20 bg-black border-t border-zinc-800 flex items-center px-4 md:px-6 gap-4">
+      <!-- CURRENT SONG INFO -->
+      <div class="hidden sm:flex items-center gap-3 w-1/3">
+        <img
+          id="playerCover"
+          src="https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=200"
+          alt="Cover"
+          class="w-12 h-12 rounded object-cover"
+        />
+        <div>
+          <div id="playerTitle" class="text-sm font-semibold">Song Title</div>
+          <div id="playerArtist" class="text-xs text-zinc-400">Artist Name</div>
+        </div>
+      </div>
+
+      <!-- CONTROLS + PROGRESS -->
+      <div class="flex flex-col items-center justify-center w-full sm:w-1/3">
+        <div class="flex items-center gap-4 mb-2">
+          <button id="prevBtn" class="text-zinc-300 hover:text-white text-lg">⏮</button>
+          <button
+            id="playPauseBtn"
+            class="bg-white text-black rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold"
+          >
+            ▶
+          </button>
+          <button id="nextBtn" class="text-zinc-300 hover:text-white text-lg">⏭</button>
+        </div>
+
+        <div class="flex items-center gap-2 w-full max-w-md">
+          <span id="currentTime" class="text-[11px] text-zinc-400 w-8 text-right">0:00</span>
+          <div id="progressContainer" class="flex-1 h-1.5 bg-zinc-700 rounded-full cursor-pointer">
+            <div id="progressBar" class="h-full bg-green-500 rounded-full" style="width: 0%;"></div>
+          </div>
+          <span id="duration" class="text-[11px] text-zinc-400 w-8">0:00</span>
+        </div>
+      </div>
+
+      <!-- EXTRA AREA (e.g. volume placeholder) -->
+      <div class="hidden sm:flex justify-end w-1/3 text-xs text-zinc-400">
+        <span>🔊 Volume</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JS -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
